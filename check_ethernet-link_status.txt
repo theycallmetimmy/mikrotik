@@ -1,0 +1,78 @@
+##This script allows you to monitor a physical port for link down.
+##You could use it with a loop back cable to test for loss of link,
+##like in a security system, or to test if the power has gone out 
+##to a certain device. The script does look a little bit different
+##because it's an output from the Mikrotik, you could type it in with 
+##less lines, but oh well. Don't forget to change the name of the port
+##that you want to monitor, and how you want the logged line to look,
+##and what you want written in your email.
+
+##Also when you change the interface name to match your port, you will
+##change just the name. As in you would change "ether1-state" to "ether2-state"
+##not "ether1-state" to "ether2". The "state" is finding the condition
+##of the port and letting the system know.
+##I also included at the bottom of this page what the script looks like
+##inside the Script area in a Mikrotik.
+
+
+
+/system script
+add name=Interface1-DOWN-warning policy=\
+    ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api \
+    source=":global \"ether1-state\"\r\
+    \n:global \"ether1-laststate\"\r\
+    \n/interface ethernet monitor ether1 once do={:set \"ether1-state\" \$stat\
+    us}\r\
+    \n:if (\$\"ether1-state\" != \$\"ether1-laststate\") do={\r\
+    \n  /tool e-mail send to=\"youremail@gmail.com\" subject=\"\$[/system i\
+    dentity get name] Main Feed has blinked\" body=(\"\$[/system clock get dat\
+    e] \$[/system clock get time] \\nEther1 going outside has blinked. \
+    - \" . \$\"ether1-state\")\r\
+    \n  :log info (\"Interface ether1 - link status changed to: \" . \$\"ether\
+    1-state\")\r\
+    \n  :set \"ether1-laststate\" \$\"ether1-state\"\r\
+    \n}\r\
+    \n \r\
+    \n"
+
+
+##Your email that you get will look like 
+
+Subject: HouseRouter Main Feed has blinked
+
+Body: sep/10/2014 17:58:34
+      Ether1 going outside has blinked. - link-ok
+
+
+##Now we have to schedule it so the router checks for a link down every so often.
+##I put my schedule to every 5 seconds. If you want a more accurate reading you
+##can lower the time, but it might eat up your CPU. Maybe, maybe not.
+
+/system scheduler
+add interval=5s name="Email on ether1 DOWN" on-event=Interface1-DOWN-warning \
+    policy=\
+    ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api \
+    start-time=startup
+
+
+
+
+
+
+
+
+
+
+##Below is what the script looks like after you have it in the router. It's 
+##easier to read than the script above. The script above is for pasting into terminal.
+
+
+:global "ether1-state"
+:global "ether1-laststate"
+/interface ethernet monitor ether1 once do={:set "ether1-state" $status}
+:if ($"ether1-state" != $"ether1-laststate") do={
+  /tool e-mail send to="youremail@gmail.com" subject="$[/system identity get name] Main Feed has blinked" body=("$[/system clock get date] $[/system clock get time] \nEther1 going outside has blinked. - " . $"ether1-state")
+  :log info ("Interface ether1 - link status changed to: " . $"ether1-state")
+  :set "ether1-laststate" $"ether1-state"
+}
+ 
