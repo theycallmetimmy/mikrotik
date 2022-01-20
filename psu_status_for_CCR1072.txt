@@ -4,7 +4,8 @@
 
 
 
-#This is a direct script export, you will need to paste it into your new script window.
+#This is a direct script export, you will need to paste it into your new script window,
+#and create a scheduler to run the script every so often. I run mine every 30 minutes.
 
 :global "psu1status"
 :global "psu1laststatus"
