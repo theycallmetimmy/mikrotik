@@ -1,0 +1,13 @@
+/ip firewall address-list
+add address=187.128.0.0/12 list=Mexico
+add address=187.144.0.0/12 list=Mexico
+add address=187.160.0.0/11 list=Mexico
+add address=187.192.0.0/10 list=Mexico
+add address=189.128.0.0/10 list=Mexico
+add address=189.192.0.0/13 list=Mexico
+add address=189.216.0.0/15 list=Mexico
+add address=189.224.0.0/16 list=Mexico
+add address=189.240.0.0/12 list=Mexico
+add address=200.36.161.0/24 list=Mexico
+add address=200.56.128.0/18 list=Mexico
+add address=200.76.96.0/20 list=Mexico

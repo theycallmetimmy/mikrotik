@@ -1,0 +1,3 @@
+/ip firewall address-list
+add address=41.140.0.0/14 list=Morocco
+add address=41.248.0.0/14 list=Morocco

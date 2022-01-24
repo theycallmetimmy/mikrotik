@@ -1,0 +1,4 @@
+/ip firewall address-list
+add address=200.55.248.0/21 list=Ecuador
+
+ 

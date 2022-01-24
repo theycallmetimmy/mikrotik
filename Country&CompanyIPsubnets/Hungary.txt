@@ -1,0 +1,8 @@
+/ip firewall address-list
+add address=46.107.0.0/16 list=Bad-Infected_Networks
+add address=92.249.128.0/17 list=Bad-Infected_Networks
+add address=94.21.90.0/24 list=Bad-Infected_Networks
+add address=94.125.176.0/22 list=Bad-Infected_Networks
+add address=145.236.0.0/16 list=Bad-Infected_Networks
+add address=193.178.119.0/24 list=Bad-Infected_Networks
+add address=194.38.96.0/19 list=Bad-Infected_Networks

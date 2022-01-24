@@ -1,0 +1,2 @@
+/ip firewall address-list
+add address=190.134.0.0/15 list=Uraguay

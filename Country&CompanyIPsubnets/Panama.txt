@@ -1,0 +1,11 @@
+/ip firewall address-list
+add address=190.219.0.0/16 list=Panama
+add address=200.35.144.0/22 list=Panama
+add address=200.63.40.0/21 list=Panama
+add address=200.63.44.128/25 list=Panama
+add address=201.182.0.0/16 list=Panama
+add address=201.218.222.64/26 list=Panama
+add address=201.227.192.0/24 list=Panama
+add address=45.129.136.0/24 comment="PANAMA - Flyserver S.A." list=Panama
+add address=141.98.9.0/24 comment="PANAMA - Flyserver S.A." list=Panama
+add address=141.98.82.0/23 comment="PANAMA - Flyserver S.A." list=Panama

@@ -1,0 +1,4 @@
+/ip firewall address-list
+add address=41.97.0.0/16 list=Algeria
+add address=41.200.0.0/15 list=Algeria
+ 

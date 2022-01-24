@@ -1,0 +1,7 @@
+/ip firewall address-list
+add address=186.88.0.0/13 list=Venezuela
+add address=190.36.0.0/14 list=Venezuela
+add address=190.78.0.0/15 list=Venezuela
+add address=190.198.0.0/15 list=Venezuela
+add address=190.200.0.0/13 list=Venezuela
+add address=201.242.0.0/16 list=Venezuela

@@ -1,0 +1,3 @@
+/ip firewall address-list
+add address=197.224.0.0/14 list=Mauritius
+ 

@@ -1,0 +1,5 @@
+/ip firewall address-list
+add address=31.6.70.0/23 list=Poland
+add address=78.8.0.0/14 list=Poland
+add address=95.160.16.0/22 list=Poland
+

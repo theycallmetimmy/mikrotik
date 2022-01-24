@@ -1,0 +1,12 @@
+/ip firewall address-list
+add address=186.104.0.0/14 list=Chile
+add address=190.20.0.0/15 list=Chile
+add address=190.22.0.0/16 list=Chile
+add address=190.82.0.0/18 list=Chile
+add address=190.82.128.0/17 list=Chile
+add address=190.108.160.0/19 list=Chile
+add address=190.196.13.0/25 list=Chile
+add address=200.28.160.0/19 list=Chile
+add address=201.215.0.0/16 list=Chile
+add address=201.223.128.0/17 list=Chile
+add address=201.236.0.0/18 list=Chile

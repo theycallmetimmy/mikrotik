@@ -1,0 +1,2 @@
+/ip firewall address-list
+add address=190.98.32.0/19 list=Suriname

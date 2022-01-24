@@ -1,0 +1,3 @@
+/ip firewall address-list
+add address=80.179.244.0/24 list=Israel
+ 

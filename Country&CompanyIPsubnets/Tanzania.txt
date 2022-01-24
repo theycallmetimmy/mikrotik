@@ -1,0 +1,2 @@
+/ip firewall address-list
+add address=196.43.64.0/19 list=Tanzania
