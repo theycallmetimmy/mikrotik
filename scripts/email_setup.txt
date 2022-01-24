@@ -1,0 +1,49 @@
+##This rule can be copy and pasted into your terminal window
+##ONCE you change the variables.
+##You will need to change your IP address if you use a different
+##email server. Or you can simply use the rules below to complete an 
+##automated check of your SMTP server for any IP change and it will
+##change the IP for you. For the below examples I am using Gmail 
+##because they are always online, so as long as you have internet, 
+##this should work fine.
+
+
+/tool e-mail
+set address=74.125.136.109 from=yourname@gmail.com last-status=\
+    succeeded password=passwordHERE port=587 start-tls=yes user=\
+    yourname@gmail.com
+
+
+
+##Now that you have email setup, you can add rules to send you 
+##email at certain events. But first, we need a few more lines to 
+##make sure that if Gmail changes their IP address for their SMTP server,
+##it will get changed in the address area of email automatically.
+
+
+/system script
+add name=Gmail-IP-Updater policy=\
+    ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api \
+    source=":local resolvedIP [:resolve \"smtp.gmail.com\"];\r\
+    \n:local currentIP [/tool e-mail get address];\r\
+    \n\r\
+    \n:if (\$resolvedIP != \$currentIP) do={\r\
+    \n   /tool e-mail set address=\$resolvedIP;\r\
+    \n   /log info \"Gmail-IP updated\";\r\
+    \n}\r\
+    \n"
+
+
+##And now you need to schedule the router to automatically run the above script
+##every so often so if Google changes their SMTP IP, it will change the
+##IP for you. So we need to add the schedule rule below.
+
+
+/system scheduler
+add interval=1h name=Gmail-IP-Resolver on-event=Gmail-IP-Updater policy=\
+    ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api \
+    start-time=startup
+
+
+##Good, your email rules are complete so now you can send out notifications
+##from your router to your email.
