@@ -1,0 +1,20 @@
+#This script is built to run every time a new DHCP lease is granted to a DHCP client.
+#This script was built to track devices that attach to a guest wifi and send an email alert every time a new device connects to the network.
+#It also adds a dynamic Address List entry to the firewall in case you need to manipulate the traffic for the new guest device.
+
+#This was tested and used on WinBox RouterOS version 6.48.6.
+#I have statically assigned DHCP entries in my DHCP lease table and the script does NOT send alerts for the "lease renewal" of the static entries.
+
+#Copy and paste the below script to your Script tab of your DHCP server you want the script to run on - IP>DHCP Server>"DHCP server name">Script tab.
+
+if ($leaseBound = "1") do={
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new Guest on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
+}
+
+
+
+#The DHCP server script commands listed here are ONLY available from within the DHCP server Script tab of the MikroTik OS. 
+#If you wish the entire MikroTik to be "aware" of the commands you are using, you will need to use global commands to 
+#make the DHCP commands available to be used by other scripts under System>Scripts.
+#I purposely did NOT do that as I wanted the commands to stay local inside the DHCP area.
