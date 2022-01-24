@@ -1,0 +1,31 @@
+#The DC Voltage is written inside the MikroTik as (12.x)volts DC but when the 
+#info is placed in a script it removes the period between the 2 and 1. 
+#No idea why but it doesn’t matter, the script will still work correctly.
+#I have altered this script in another scenario to successfully pull the psu status of a RB1100AHx4, 
+#however in this example, it is built for the CCR1072.
+
+
+
+#This is a direct script export, you will need to paste it into your new script window,
+#and create a scheduler to run the script every so often. I run mine every 30 minutes.
+
+:global "psu1status"
+:global "psu1laststatus"
+:global "psu2status"
+:global "psu2laststatus"
+:global psu1volts [/system health get psu1-voltage]
+:global psu2volts [/system health get psu2-voltage]
+:if (psu1volts > "100") do={:set "psu1status" "PSU1_GOOD"}
+:if (psu1volts < "100") do={:set "psu1status" "PSU1_BAD"}
+:if (psu2volts > "100") do={:set "psu2status" "PSU2_GOOD"}
+:if (psu2volts < "100") do={:set "psu2status" "PSU2_BAD"}
+:if ($"psu1status" != $"psu1laststatus") do {
+/tool e-mail send to="youremail@email.com" subject=("This router $[/system identity get name] has a power supply status update. $[/system clock get date] $psu1status") body=("This router $[/system identity get name] has a power supply status update. $[/system clock get date] $psu1status Voltage - $psu1volts DC")
+:log info "Email sent about power supply $psu1status status"
+:set "psu1laststatus" $"psu1status"
+}
+:if ($"psu2status" != $"psu2laststatus") do {
+/tool e-mail send to="youremail@email.com" subject=("This router $[/system identity get name] has a power supply status update. $[/system clock get date] $psu2status") body=("This router $[/system identity get name] has a power supply status update. $[/system clock get date] $psu2status Voltage - $psu2volts DC")
+:log info "Email sent about power supply $psu2status status"
+:set "psu2laststatus" $"psu2status"
+}
