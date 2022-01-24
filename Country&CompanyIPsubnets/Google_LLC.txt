@@ -1,4 +1,5 @@
-
+#Since you may have overlap of subnets from country/company, I recommend pasting the below lines into your Terminal window.
+#That way if there is an overlap, Terminal just ignores the duplicate entry.
 
 /ip firewall address-list
 add address=	8.8.4.0/24	comment="Google LLC" list=CountryIPBlocks	
