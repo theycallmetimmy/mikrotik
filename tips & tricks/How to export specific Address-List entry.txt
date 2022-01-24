@@ -1,0 +1,4 @@
+#The below command need to be entered into the Terminal window. It will place a file
+#in your MikroTik "Files" folder with the name you have given it.
+
+/ip firewall address-list print file=SomeFileName where list="SomeAddressListName"
