@@ -1,0 +1,26 @@
+#This script was added without the policies "dude" and "romon".
+#You will need a scheduler to run this script, I have mine running at startup and then every 10minutes after that.
+#This will check the CPU and system temps and send email alerts at different points that are set in the script.
+
+:global "tempstatus"
+:global "templaststatus"
+:global "cputempstatus"
+:global "cputemplaststatus"
+:global "systemtemp" [/system health get temperature]
+:global "cputemp" [/system health get cpu-temperature]
+:if (systemtemp > "50") do={:set "tempstatus" "system temp is too high"}
+:if (systemtemp > "60") do={:set "tempstatus" "system temp is critical"}
+:if (systemtemp < "40") do={:set "tempstatus" "system temp is within spec"}
+:if (cputemp > "65") do={:set "cputempstatus" "cpu temp is too high"}
+:if (cputemp > "75") do={:set "cputempstatus" "cpu temp is critical"}
+:if (cputemp < "64") do={:set "cputempstatus" "cpu temp is within spec"}
+:if ($"tempstatus" != $"templaststatus") do {
+/tool e-mail send to="tim.rothkopf@ngn.coop" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus - $systemtemp Celcius")
+:log info "Email sent about system $tempstatus status"
+:set "templaststatus" $"tempstatus"
+}
+:if ($"cputempstatus" != $"cputemplaststatus") do {
+/tool e-mail send to="tim.rothkopf@ngn.coop" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $cputempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $cputempstatus - $cputemp Celcius")
+:log info "Email sent about system $cputempstatus status"
+:set "cputemplaststatus" $"cputempstatus"
+}
