@@ -1,0 +1,16 @@
+#This script was added without the policies "dude" and "romon".
+#You will need a scheduler to run this script, I have mine running at startup and then every 10minutes after that.
+#This will check the system temp and send email alerts at different points that are set in the script.
+
+
+:global "tempstatus"
+:global "templaststatus"
+:global "systemtemp" [/system health get temperature]
+:if (systemtemp > "50") do={:set "tempstatus" "system temp is too high"}
+:if (systemtemp > "60") do={:set "tempstatus" "system temp is critical"}
+:if (systemtemp < "40") do={:set "tempstatus" "system temp is within spec"}
+:if ($"tempstatus" != $"templaststatus") do {
+/tool e-mail send to="home.rothkopf@gmail.com" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus - $systemtemp Celcius")
+:log info "Email sent about system $tempstatus status"
+:set "templaststatus" $"tempstatus"
+}
