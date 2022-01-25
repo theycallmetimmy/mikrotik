@@ -13,7 +13,7 @@ if ($leaseBound = "1") do={
 /ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
 }
 
-#I altered the script slightly to set a hostname for the Amazon Fire Tablet since it doesn't give one.
+#I altered the script slightly below to set a hostname for the Amazon Fire Tablet since it doesn't give one.
 #You can add the hostname assignment for multiple devices if you have other DHCP clients that don't advertise a hostname.
 #The below script assigns a hostname to the tablet ONLY inside the script. The hostname does NOT show up inside the DHCP server leases table.
 
