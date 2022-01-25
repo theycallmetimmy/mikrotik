@@ -4,11 +4,23 @@
 
 #This was tested and used on WinBox RouterOS version 6.48.6.
 #I have statically assigned DHCP entries in my DHCP lease table and the script does NOT send alerts for the "lease renewal" of the static entries.
+#However I have noticed that some devices will connect/disconnect from my wifi randomly and will cause the script to run, I'm looking at you Amazon Fire Tablet.
 
 #Copy and paste the below script to your Script tab of your DHCP server you want the script to run on - IP>DHCP Server>"DHCP server name">Script tab.
 
 if ($leaseBound = "1") do={
 /tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new Guest on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
+}
+
+#I altered the script slightly to set a hostname for the Amazon Fire Tablet since it doesn't give one.
+#You can add the hostname assignment for multiple devices if you have other DHCP clients that don't advertise a hostname.
+#The below script assigns a hostname to the tablet ONLY inside the script. The hostname does NOT show up inside the DHCP server leases table.
+
+:if ($leaseActMAC = "24:CE:33:00:00:00") do={:set $"lease-hostname" "ExampleFireTablet"}
+:if ($leaseActMAC = "E8:A0:CD:00:00:00") do={:set $"lease-hostname" "NintendoSwitch"}
+if ($leaseBound = "1") do={
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
 /ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
 }
 
