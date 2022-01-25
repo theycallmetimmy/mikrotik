@@ -24,6 +24,35 @@ if ($leaseBound = "1") do={
 /ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
 }
 
+#This one does the same as the above except it does NOT notify via email for certain mac addresses on your network.
+#For example if you don't want to be notified every time your phone connects/disconnects from the wifi and the DHCP lease renews, this is the one for you.
+#I have given an example with one mac address that I DON'T want to be notified about, and another example with 2 mac addresses.
+
+#example 1
+:if ($leaseActMAC = "24:CE:33:00:00:00") do={:set $"lease-hostname" "ExampleFireTablet"}
+:if ($leaseActMAC = "E8:A0:CD:00:00:00") do={:set $"lease-hostname" "NintendoSwitch"}
+:if ($leaseBound = "1") do={
+:if ($leaseActMAC = "54:D1:7D:00:00:00") do={:log info "Husband is home"
+} else={
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
+}
+}
+
+
+#example 2
+:if ($leaseActMAC = "24:CE:33:00:00:00") do={:set $"lease-hostname" "ExampleFireTablet"}
+:if ($leaseActMAC = "E8:A0:CD:00:00:00") do={:set $"lease-hostname" "NintendoSwitch"}
+:if ($leaseBound = "1") do={
+:if ($leaseActMAC = "54:D1:7D:00:00:00") do={:log info "Husband is home"
+} else={
+:if ($leaseActMAC = "DC:EF:CA:00:00:00") do={:log info "Wife is home"
+} else={
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
+}
+}
+}
 
 
 #The DHCP server script commands listed here are ONLY available from within the DHCP server Script tab of the MikroTik OS. 
