@@ -41,7 +41,7 @@ add action=drop chain=forward comment=\
 ##or through your router. It just sets up rules to look for 
 ##address lists labeled "China" in IP/Firewall/Address Lists
 ##and then block every IP labeled "China".
-#At this time, I would NOT recommend getting too eager with blocking countries THRU your router.
+#At this time, I would NOT recommend getting too eager with blocking countries THRU your router (chain=forward rule).
 #Even Microsoft uses resources outside the USA, so if you block Amsterdam from passing thru your router,
 #Windows Updates may no longer work. You have been warned.
 
