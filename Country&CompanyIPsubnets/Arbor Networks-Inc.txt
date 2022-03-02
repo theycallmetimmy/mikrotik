@@ -1,0 +1,6 @@
+/ip firewall address-list
+add address=146.88.240.0/24 comment="Arbor Networks Inc - scanner" list=CountryIPBlocks
+add address=216.130.192.0/21 comment="Arbor Networks Inc - scanner" list=CountryIPBlocks
+add address=216.130.200.0/23 comment="Arbor Networks Inc - scanner" list=CountryIPBlocks
+add address=216.130.202.0/24 comment="Arbor Networks Inc - scanner" list=CountryIPBlocks
+add address=216.130.204.0/24 comment="Arbor Networks Inc - scanner" list=CountryIPBlocks
