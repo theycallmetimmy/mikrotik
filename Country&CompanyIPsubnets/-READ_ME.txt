@@ -9,7 +9,7 @@
 
 #Also, most of the country lists were built from this website, hats off to you sir.
 https://mikrotikconfig.com/firewall/
-#Here is another site to built a country list
+#Here is another site to build a country list
 https://www.ip2location.com/free/visitor-blocker
 
 
@@ -37,16 +37,15 @@ add action=drop chain=forward comment=\
     src-address-list=China
 
 
-##Those two rules in themselves will NOT block China from getting to
-##or through your router. It just sets up rules to look for 
+##Those two rules in themselves will NOT block China from getting through your router. It just sets up rules to look for 
 ##address lists labeled "China" in IP/Firewall/Address Lists
 ##and then block every IP labeled "China".
-#At this time, I would NOT recommend getting too eager with blocking countries THRU your router (chain=forward rule).
+#At this time, I would NOT recommend getting too eager with blocking lots of countries THRU your router (chain=forward rule).
 #Even Microsoft uses resources outside the USA, so if you block Amsterdam from passing thru your router,
 #Windows Updates may no longer work. You have been warned.
 
-##To add China's IP's to your Address List, go into the folder
-##marked "BlockedCountries" and copy and paste the contents of
+##To add China's IP's to your Address List, go into the link on this page
+##marked "Country&CompanyIPsubnets" and copy and paste the contents of
 ##China (or any other country) into your terminal window.
 ##Example below from China.
 
@@ -56,3 +55,27 @@ add address=1.92.0.0/14 list=China
 add address=1.192.0.0/13 list=China
 add address=1.202.0.0/15 list=China
 add address=1.204.0.0/14 list=China
+
+
+#There is an additional rule(s) you can add to the Raw tab of your IP/Firewall section, but be careful.
+#This rule has to do with prerouting. Because it (kind of) gets blocked before it even hits your firewall it will be hard to Torch/track using your MikroTik.
+#I would recommend using this rule ONLY if you know what it is doing.
+#The first rule is an allow rule so your router can try and pull updates. The second rule blocks all listed Address Lists traffic from passing into/thru your router.
+
+/ip firewall raw
+add action=accept chain=prerouting comment="Allow MikroTik" src-address-list=\
+    Mikrotik
+add action=drop chain=prerouting comment=\
+    "Block Infected networks into my router from Address Lists" \
+    src-address-list=Bad-Infected_Networks
+
+#Obviously you will need Address Lists that match both entries so it can allow MikroTik into your router and also drop traffic on the second rule.
+#Here is a sample of the MikroTik addresses I allow thru my MikroTik.
+
+/ip firewall address-list
+add address=cloud.mikrotik.com list=Mikrotik
+add address=cloud2.mikrotik.com list=Mikrotik
+add address=download.mikrotik.com list=Mikrotik
+add address=download2.mikrotik.com list=Mikrotik
+add address=mikrotik.com list=Mikrotik
+add address=www.mikrotik.com list=Mikrotik
