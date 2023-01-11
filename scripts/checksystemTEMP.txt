@@ -10,7 +10,7 @@
 :if (systemtemp > "60") do={:set "tempstatus" "system temp is critical"}
 :if (systemtemp < "40") do={:set "tempstatus" "system temp is within spec"}
 :if ($"tempstatus" != $"templaststatus") do {
-/tool e-mail send to="home.rothkopf@gmail.com" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus - $systemtemp Celcius")
+/tool e-mail send to="youremailaddresshere@email.com" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus - $systemtemp Celcius")
 :log info "Email sent about system $tempstatus status"
 :set "templaststatus" $"tempstatus"
 }
