@@ -1,3 +1,10 @@
+#This script allows you to perform a MikroTik to MikroTik bandwidth test from Terminal, or in this case, from a saved script
+#which you can run whenever or have it attached to a schedule.
+#Obviously you will need to put in the correct username and password of the far end MikroTik(please do not use password as your password)
+#Also, you will need the bandwidth server feature enabled on the far MikroTik. 
+#I recommend firewalling the ports used if you plan on leaving it on for any amount of time.
+
+
 /tool {
 :local rxAvg 0
 :local txAvg 0
