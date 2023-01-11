@@ -15,12 +15,12 @@
 :if (cputemp > "75") do={:set "cputempstatus" "cpu temp is critical"}
 :if (cputemp < "64") do={:set "cputempstatus" "cpu temp is within spec"}
 :if ($"tempstatus" != $"templaststatus") do {
-/tool e-mail send to="tim.rothkopf@ngn.coop" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus - $systemtemp Celcius")
+/tool e-mail send to="youremailaddresshere@email.com" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $tempstatus - $systemtemp Celcius")
 :log info "Email sent about system $tempstatus status"
 :set "templaststatus" $"tempstatus"
 }
 :if ($"cputempstatus" != $"cputemplaststatus") do {
-/tool e-mail send to="tim.rothkopf@ngn.coop" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $cputempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $cputempstatus - $cputemp Celcius")
+/tool e-mail send to="youremailaddresshere@email.com" subject=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $cputempstatus") body=("This router $[/system identity get name] has a temperature alert. $[/system clock get date] $cputempstatus - $cputemp Celcius")
 :log info "Email sent about system $cputempstatus status"
 :set "cputemplaststatus" $"cputempstatus"
 }
