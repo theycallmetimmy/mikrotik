@@ -1,0 +1,3 @@
+#This script has to be added to the script tab of your DHCP server.
+
+/tool e-mail send to="youremailhere@gmail.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new Guest on $leaseServerName and received $leaseActIP address. ";
