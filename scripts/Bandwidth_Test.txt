@@ -1,0 +1,13 @@
+/tool {
+:local rxAvg 0
+:local txAvg 0
+#This bandwidth test is performed using bps and then converts it to Kbps in the log entry
+#The formula to use in the local-tx-speed and remote-tx-speed areas is as follows
+#1000bps=1kbps     so 1000000bps = 1000Kbps = 1Mbps
+bandwidth-test 192.168.1.5 duration=10s direction=both protocol=udp local-tx-speed=1000000 remote-tx-speed=1000000 user=username password=password do={
+:set rxAvg ($"rx-10-second-average"/1000)
+:set txAvg ($"tx-10-second-average"/1000)
+}
+:put "Rx/Tx: $rxAvg/$txAvg Kbps"
+:log info "Bandwidth test results are as follows Rx/Tx: $rxAvg/$txAvg Kbps"
+}
