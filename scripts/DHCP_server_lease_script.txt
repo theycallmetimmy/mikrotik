@@ -9,8 +9,8 @@
 #Copy and paste the below script to your Script tab of your DHCP server you want the script to run on - IP>DHCP Server>"DHCP server name">Script tab.
 
 if ($leaseBound = "1") do={
-/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $lease-hostname" is new Guest on $leaseServerName and received $leaseActIP address. ";
-/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $lease-hostname" timeout=30m;
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new Guest on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
 }
 
 #I altered the script slightly below to set a hostname for the Amazon Fire Tablet since it doesn't give one.
@@ -21,8 +21,8 @@ if ($leaseBound = "1") do={
 :if ($leaseActMAC = "24:CE:33:00:00:00") do={:set $"lease-hostname" "ExampleFireTablet"}
 :if ($leaseActMAC = "E8:A0:CD:00:00:00") do={:set $"lease-hostname" "NintendoSwitch"}
 if ($leaseBound = "1") do={
-/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
-/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $lease-hostname" timeout=30m;
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
 }
 
 #This one does the same as the above except it does NOT notify via email for certain mac addresses on your network.
@@ -49,8 +49,8 @@ if ($leaseBound = "1") do={
 } else={
 :if ($leaseActMAC = "DC:EF:CA:00:00:00") do={:log info "Wife is home"
 } else={
-/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
-/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $lease-hostname" timeout=30m;
+/tool e-mail send to="youremailhere@email.com" subject=("New Guest WiFi client ".[/system identity get name]) body=" Client $leaseActMAC $"lease-hostname" is new client on $leaseServerName and received $leaseActIP address. ";
+/ip firewall address-list add address=$leaseActIP list=NewGuestWifiClients comment="$leaseActMAC $"lease-hostname"" timeout=30m;
 }
 }
 }
